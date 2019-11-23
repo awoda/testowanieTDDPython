@@ -23,3 +23,14 @@ class Account(object):
 
     def transfer(self, transfer_amount):
         self.accountBalance += transfer_amount
+
+    def withdraw(self, moneyAmount):
+        if (self.accountBalance >= moneyAmount):
+            self.accountBalance -= moneyAmount
+
+    def sendMoney(self, account, moneyAmount):
+        if moneyAmount<0:
+            return
+        if (self.accountBalance >= moneyAmount):
+            self.accountBalance -= moneyAmount
+            account.accountBalance += moneyAmount
