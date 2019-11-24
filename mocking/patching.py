@@ -16,7 +16,4 @@ if __name__ == "__main__":
         patchedClass = ClassToBePatched()
         print(patchedClass.function())
 
-    # SomeClass.something = create_autospec(SomeClass.something)
-    # SomeClass.something.return_value = "patched with autospec"
-    # some_class = SomeClass()
-    # print(some_class.something("1234"))
+

@@ -12,6 +12,10 @@ def names_parser(names):
 
 
 def greet(*additional_names):
+
+    if False:
+        print("56789")
+
     temp_list = []
     for name in additional_names:
         temp_list.extend(name.split(","))
