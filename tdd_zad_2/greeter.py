@@ -12,7 +12,11 @@ def names_parser(names):
 
 
 def greet(*additional_names):
-    additional_names = list(additional_names)
+    temp_list = []
+    for name in additional_names:
+        temp_list.extend(name.split(","))
+    additional_names = temp_list
+
     if len(additional_names) == 0:
         additional_names.append("my friend")
 
@@ -21,9 +25,9 @@ def greet(*additional_names):
 
     for name in additional_names:
         if name.isupper():
-            names_uppercase.append(name)
+            names_uppercase.append(name.strip())
         else:
-            names_normal.append(name)
+            names_normal.append(name.strip())
 
     if len(names_normal) > 0 and len(names_uppercase) == 0:
         return "Hello {}.".format(names_parser(names_normal))
@@ -35,3 +39,4 @@ def greet(*additional_names):
         normal_names = names_parser(names_normal)
         upper_names = names_parser(names_uppercase).upper()
         return 'Hello {}. AND HELLO {}!'.format(normal_names, upper_names)
+
