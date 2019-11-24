@@ -1,13 +1,18 @@
 import unittest
 import os
+import warnings
+
 from account import Account
-from card import Card, CardLockedException, AnotherException
+from card import Card, CardLockedException
+from unittest.mock import MagicMock, Mock
 
 
 class MyTestCase(unittest.TestCase):
 
     def setUp(self) -> None:
         self.account = Account(name="Adrian", account_number="1234567890", surname="Woda", account_balance=20000.00)
+        # self.account = Mock()
+        # self.account.owner = Mock(return_value="Adrian Woda")
 
     def test_env_variable(self):
         self.assertEqual(os.environ['zmienna'], "123")
@@ -49,26 +54,25 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(card.get_account(), self.account)
 
     def test_should_withdraw_money_from_account(self):
-# 2.        chce sprawdzic, czy po wyplacie, moj balance zmniejszyl się
+        # 1. chce sprawdzic, czy po wyplacie, moj balance zmniejszyl się
         self.account.withdraw(500)
         self.assertEqual(self.account.balance(), 19500)
 
     def test_should_withdraw_money_from_account2(self):
-# 1.        chce sprawdzic, czy moge wyciagnac wiecej niz mam
+        # 2. chce sprawdzic, czy moge wyciagnac wiecej niz mam
         self.account.withdraw(25000)
         self.assertEqual(self.account.balance(), 20000)
 
     def test_should_withdraw_money_from_account3(self):
-# 1.        chce sprawdzic, czy moge wyciagnac wszystko
+        # 3. chce sprawdzic, czy moge wyciagnac wszystko
         self.account.withdraw(20000)
         self.assertEqual(self.account.balance(), 0)
-
 
     def test_should_send_money_to_another_account(self):
         account2 = Account(name="John", surname="Doe", account_number="0987654321", account_balance=20000.00)
         self.account.sendMoney(account2, 10)
-        self.assertEqual(self.account.balance(), 20000-10)
-        self.assertEqual(account2.balance(), 20000+10)
+        self.assertEqual(self.account.balance(), 20000 - 10)
+        self.assertEqual(account2.balance(), 20000 + 10)
 
     def test_should_send_money_to_another_account2(self):
         account2 = Account(name="John", surname="Doe", account_number="0987654321", account_balance=20000.00)
@@ -107,6 +111,10 @@ class MyTestCase(unittest.TestCase):
 
         self.assertTrue(cart.check_pin("1234"))
 
+    def test_warinings(self):
+        warnings.warn("You really want to assert warnings?!", RuntimeWarning)
+        with self.assertWarnsRegex(RuntimeWarning, "warning") as warning:
+            warnings.warn("another warning", RuntimeWarning)
 
 
 if __name__ == '__main__':

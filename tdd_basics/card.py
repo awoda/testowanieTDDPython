@@ -1,11 +1,12 @@
 class CardLockedException(BaseException):
     pass
 
+
 class AnotherException(BaseException):
     pass
 
-class Card(object):
 
+class Card(object):
     def __init__(self, account, pin):
         self.is_locked = False
         self.incorrect_pin_counter = 0
@@ -23,7 +24,6 @@ class Card(object):
             return True
         self.incorrect_pin_counter += 1
         return False
-
 
     def get_account(self):
         return self.account
